@@ -1,0 +1,5 @@
+<div class="issue" [class.done]="issue.done" (click)="toggleIssueDone()">
+  <span>{{issue.name}}</span><br/>
+  <span *ngIf="issue.children">Children: {{issue.children.length}}</span>
+  <button (click)="removeIssue()">x</button>
+</div>

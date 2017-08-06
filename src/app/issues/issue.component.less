@@ -1,0 +1,16 @@
+div.issue {
+  background-color:gray;
+  display:inline-block;
+  width: 120px;
+  cursor: pointer;
+  &.done{
+    text-decoration: line-through;
+  }
+  button{
+    float:right;
+    display:none;
+  }
+  &:hover button{
+    display:inline;
+  }
+}

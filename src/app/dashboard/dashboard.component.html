@@ -1,0 +1,15 @@
+<div>
+  <input #issueInput type="text" placeholder="Issue Name" (keyup.enter)="addIssueFromInput(issueInput, parentIssueInput)" />
+  <input type="number" #parentIssueInput />
+  <button (click)="addIssueFromInput(issueInput, parentIssueInput)">Add Issue</button>
+</div>
+<ul>
+  <li *ngFor="let a of getIssues()">
+     <blackguard-issue [issue]="a"></blackguard-issue>
+    <!-- <div class="issue" [class.done]="issue.done" (click)="toggleIssueDone(issue.id)">
+      <span>{{issue.name}}</span><br/>
+      <span>{{issue.issues.length}}</span>
+      <button (click)="removeIssue(issue.id)">x</button>
+    </div> -->
+  </li>
+</ul>

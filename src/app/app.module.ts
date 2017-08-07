@@ -1,10 +1,12 @@
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
+import { CommonModule } from '@angular/common';
+import { MaterialModule } from '@angular/material';
 import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { CommonModule } from '@angular/common';
 import { IssueComponent } from './issues/issue.component';
 import { IssueService } from 'app/issues/service/issue.service';
 
@@ -15,9 +17,11 @@ import { IssueService } from 'app/issues/service/issue.service';
     IssueComponent
   ],
   imports: [
-    CommonModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
     BrowserModule,
-    AppRoutingModule
+    CommonModule,
+    MaterialModule
   ],
   providers: [IssueService],
   bootstrap: [AppComponent]

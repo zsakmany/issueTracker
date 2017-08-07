@@ -1,15 +1,10 @@
-<div>
-  <input #issueInput type="text" placeholder="Issue Name" (keyup.enter)="addIssueFromInput(issueInput, parentIssueInput)" />
-  <input type="number" #parentIssueInput />
-  <button (click)="addIssueFromInput(issueInput, parentIssueInput)">Add Issue</button>
-</div>
-<ul>
-  <li *ngFor="let a of getIssues()">
-     <blackguard-issue [issue]="a"></blackguard-issue>
-    <!-- <div class="issue" [class.done]="issue.done" (click)="toggleIssueDone(issue.id)">
-      <span>{{issue.name}}</span><br/>
-      <span>{{issue.issues.length}}</span>
-      <button (click)="removeIssue(issue.id)">x</button>
-    </div> -->
-  </li>
-</ul>
+<section id="dashboard">
+  <span>Create issue</span>
+  <md-input-container>
+    <input mdInput #issueInput placeholder="new issue" (keyup.enter)="addIssueFromInput(issueInput)">
+  </md-input-container>
+  <span *ngIf="parentIssue">under <em>{{parentIssue.name|uppercase}}</em></span>
+  <button md-button (click)="addIssueFromInput(issueInput)"><md-icon>add</md-icon></button>
+  <blackguard-issue *ngFor="let issue of getIssues()" [issue]="issue" (select)="onSelectIssue($event)" (deselect)="onDeselectIssue($event)">
+  </blackguard-issue>
+</section>

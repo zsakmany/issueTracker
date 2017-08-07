@@ -1,5 +1,21 @@
-<div class="issue" [class.done]="issue.done" (click)="toggleIssueDone()">
-  <span>{{issue.name}}</span><br/>
-  <span *ngIf="issue.children">Children: {{issue.children.length}}</span>
-  <button (click)="removeIssue()">x</button>
-</div>
+<md-card class="issue">
+  <md-toolbar>
+    <span>{{issue.name|uppercase}}</span>
+    <span class="spacer"></span>
+    <button md-icon-button>
+      <md-icon md-light>edit</md-icon>
+    </button>
+    <button md-icon-button>
+      <md-icon md-light (click)="removeIssue()">delete</md-icon>
+    </button>
+  </md-toolbar>
+  <md-card-content>
+    <p>
+      <span *ngIf="issue.children && issue.children.length===1">1 sub issue</span>
+      <span *ngIf="issue.children && issue.children.length>1">{{issue.children.length}} sub issues</span>
+    </p>
+  </md-card-content>
+  <md-card-actions>
+    <button md-button class="parent" mdTooltip="Use as parent" (click)="clickParentButton()">PARENT</button>
+  </md-card-actions>
+</md-card>

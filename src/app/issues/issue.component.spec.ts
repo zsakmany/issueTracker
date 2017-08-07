@@ -1,12 +1,15 @@
 import { async, ComponentFixture, TestBed, inject } from '@angular/core/testing';
 
 import { IssueComponent } from './issue.component';
-import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { NO_ERRORS_SCHEMA, EventEmitter, DebugElement } from '@angular/core';
 import { IssueService } from 'app/issues/service/issue.service';
+import { Issue } from 'app/models/issue';
+import { By } from '@angular/platform-browser';
 
 describe('IssueComponent', () => {
   let component: IssueComponent;
   let fixture: ComponentFixture<IssueComponent>;
+  let issueEl: DebugElement;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -20,6 +23,7 @@ describe('IssueComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(IssueComponent);
     component = fixture.componentInstance;
+    issueEl = fixture.debugElement.query(By.css('md-card.issue button.parent'));
     fixture.detectChanges();
   });
 
@@ -38,4 +42,34 @@ describe('IssueComponent', () => {
     component.removeIssue();
     expect(spy.calls.count()).toBe(1);
   }));
+
+  it('should emit select event', () => {
+    const spy = spyOn(component.select, 'emit');
+    component.clickParentButton();
+    expect(spy).toHaveBeenCalledWith(<Issue>{});
+  });
+
+  it('should deselect issue when clicked twice', () => {
+    const spySelect = spyOn(component.select, 'emit');
+    const spyDeselect = spyOn(component.deselect, 'emit');
+    component.clickParentButton();
+    expect(spySelect).toHaveBeenCalledWith(<Issue>{});
+    component.clickParentButton();
+    expect(spyDeselect).toHaveBeenCalledWith(<Issue>{});
+  });
+
+  it('should deselect issue when removed', inject([IssueService], function (service: IssueService) {
+    const spyDeselect = spyOn(component.deselect, 'emit');
+    spyOn(service, 'removeIssue');
+    component.removeIssue();
+    expect(spyDeselect).toHaveBeenCalledWith(<Issue>{});
+  }));
+
+  it('should call selectIssue when clicked', function () {
+    let emittedIssue: Issue;
+    component.select.subscribe((issue: Issue) => emittedIssue = issue);
+    issueEl.triggerEventHandler('click', null);
+    expect(emittedIssue).toEqual(<Issue>{});
+  });
+
 });

@@ -1,16 +1,13 @@
-div.issue {
-  background-color:gray;
-  display:inline-block;
-  width: 120px;
-  cursor: pointer;
-  &.done{
-    text-decoration: line-through;
+@width: 400px;
+md-card.issue {
+  width: @width;
+  margin-bottom: 8px;
+  span.spacer{
+    flex: 1 1 auto;
   }
-  button{
-    float:right;
-    display:none;
-  }
-  &:hover button{
-    display:inline;
+  md-toolbar {
+    width: @width + 48px;
+    margin: -24px -24px 16px -24px;
   }
 }
+

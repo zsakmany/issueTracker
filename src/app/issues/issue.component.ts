@@ -1,6 +1,9 @@
 import { Input, Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Issue } from 'app/models/issue';
 import { IssueService } from 'app/issues/service/issue.service';
+import { MdDialog, MdDialogRef } from '@angular/material';
+import { EditIssueComponent } from 'app/issues/edit-issue/edit-issue.component';
+
 
 @Component({
   selector: 'blackguard-issue',
@@ -15,7 +18,7 @@ export class IssueComponent implements OnInit {
 
   private useAsParent = false;
 
-  constructor(private issueService: IssueService) { }
+  constructor(private issueService: IssueService, private dialog: MdDialog) { }
 
   ngOnInit() {
   }
@@ -27,6 +30,16 @@ export class IssueComponent implements OnInit {
   public removeIssue(): void {
     this.issueService.removeIssue(this.issue.id);
     this.deselect.emit(this.issue);
+  }
+
+  public editIssue(): void {
+    const dialogRef = this.dialog.open(EditIssueComponent, {
+      data: this.issue,
+      disableClose: true
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      // this.selectedOption = result;
+    });
   }
 
   public clickParentButton(): void {

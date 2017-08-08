@@ -1,0 +1,14 @@
+<md-input-container>
+  <input mdInput name="name" [(ngModel)]="issue.name" />
+</md-input-container>
+<md-checkbox [(ngModel)]="issue.done">Done</md-checkbox>
+<br/>
+<section *ngIf="issue.children">
+  <span>Sub:</span><br/>
+  <ul>
+    <li *ngFor="let sub of issue.children">
+      {{getName(sub)|uppercase}}
+    </li>
+  </ul>
+</section>
+<button md-button md-dialog-close>Close</button>

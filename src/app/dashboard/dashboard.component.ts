@@ -12,7 +12,8 @@ export class DashboardComponent implements OnInit {
 
   @ViewChildren(IssueComponent) private issueComponents: QueryList<IssueComponent>;
 
-  parentIssue: IIssue = null;
+  public parentIssue: IIssue = null;
+  private filterRoots = true;
 
   constructor(private issueService: IssueService) { }
 
@@ -30,7 +31,7 @@ export class DashboardComponent implements OnInit {
   }
 
   public getIssues(): IIssue[] {
-    return this.issueService.getRootIssues();
+    return this.filterRoots ? this.issueService.getRootIssues() : this.issueService.getIssues();
   }
 
   public getChildrenOf(id: number): IIssue[] {
@@ -43,6 +44,10 @@ export class DashboardComponent implements OnInit {
 
   public onDeselectIssue(issue: IIssue): void {
     this.parentIssue = null;
+  }
+
+  public toggleFilter(): void {
+    this.filterRoots = !this.filterRoots;
   }
 
   private unmarkParentIssue(): void {

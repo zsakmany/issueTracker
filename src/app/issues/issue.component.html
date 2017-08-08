@@ -3,7 +3,7 @@
     <span>{{issue.name|uppercase}}</span>
     <span class="spacer"></span>
     <button md-icon-button>
-      <md-icon md-light>edit</md-icon>
+      <md-icon md-light (click)="editIssue()">edit</md-icon>
     </button>
     <button md-icon-button>
       <md-icon md-light (click)="removeIssue()">delete</md-icon>

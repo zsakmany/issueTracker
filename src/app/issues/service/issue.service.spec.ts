@@ -1,11 +1,14 @@
 import { TestBed, inject } from '@angular/core/testing';
 
 import { IssueService } from './issue.service';
+import { NotificationService } from 'app/common-services/notification.service';
+import { MaterialModule } from '@angular/material';
 
 describe('IssueService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [IssueService]
+      imports: [MaterialModule],
+      providers: [IssueService, NotificationService]
     });
   });
 

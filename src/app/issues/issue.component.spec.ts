@@ -5,6 +5,8 @@ import { NO_ERRORS_SCHEMA, EventEmitter, DebugElement } from '@angular/core';
 import { IssueService } from 'app/issues/service/issue.service';
 import { Issue } from 'app/models/issue';
 import { By } from '@angular/platform-browser';
+import { MaterialModule } from '@angular/material';
+import { NotificationService } from 'app/common-services/notification.service';
 
 describe('IssueComponent', () => {
   let component: IssueComponent;
@@ -15,7 +17,8 @@ describe('IssueComponent', () => {
     TestBed.configureTestingModule({
       declarations: [IssueComponent],
       schemas: [NO_ERRORS_SCHEMA],
-      providers: [IssueService]
+      imports: [MaterialModule],
+      providers: [IssueService, NotificationService]
     })
       .compileComponents();
   }));

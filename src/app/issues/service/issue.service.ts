@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Issue } from 'app/models/issue';
 import * as io from 'socket.io-client';
+import { NotificationService } from 'app/common-services/notification.service';
 
 @Injectable()
 export class IssueService {
@@ -8,13 +9,15 @@ export class IssueService {
   private issues: Issue[] = [];
   private socket: SocketIOClient.Socket
 
-  constructor() {
+  constructor(private notificationService: NotificationService) {
     this.socket = io();
     this.socket.once('SERVER_LOAD_ISSUES', (data: any) => {
       this.issues = <Issue[]>data;
+      this.notificationService.note('Issues loaded');
     });
     this.socket.on('SERVER_UPDATE_ISSUES', (data: any) => {
       this.issues = <Issue[]>data;
+      this.notificationService.note('Issues updated');
     });
   }
 
@@ -43,6 +46,7 @@ export class IssueService {
       throw new Error(`There is no Issue with ID: ${id}`);
     }
     this.issues = this.issues.filter(i => i.id !== id);
+    this.removeFromChildren(id);
     this.socket.emit('CLIENT_ISSUE_CHANGE', this.issues);
   }
 
@@ -56,6 +60,13 @@ export class IssueService {
     return this.issues.filter(i => parentIssue.includes(i.id));
   }
 
+  public getIssueById(id: number): Issue {
+    if (this.issues.find(i => i.id === id) === undefined) {
+      throw new Error(`There is no Issue with ID: ${id}`);
+    }
+    return this.issues.find(i => i.id === id);
+  }
+
   private addIssue(issue: Issue): void {
     this.issues.push(issue);
   }
@@ -66,11 +77,13 @@ export class IssueService {
     issue.name = name;
     return issue;
   }
-
-  private getIssueById(id: number): Issue {
-    if (this.issues.find(i => i.id === id) === undefined) {
-      throw new Error(`There is no Issue with ID: ${id}`);
-    }
-    return this.issues.find(i => i.id === id);
+  private removeFromChildren(id: number): void {
+    this.issues.forEach(issue => {
+      const index = issue.children.indexOf(id);
+      if (index > -1) {
+        issue.children.splice(index, 1);
+      }
+    });
   }
+
 }

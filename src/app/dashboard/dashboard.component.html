@@ -4,7 +4,8 @@
     <input mdInput #issueInput placeholder="new issue" (keyup.enter)="addIssueFromInput(issueInput)">
   </md-input-container>
   <span *ngIf="parentIssue">under <em>{{parentIssue.name|uppercase}}</em></span>
-  <button md-button (click)="addIssueFromInput(issueInput)"><md-icon>add</md-icon></button>
+  <button md-button (click)="addIssueFromInput(issueInput)"><md-icon>add</md-icon></button><br/>
+  <md-checkbox [checked]=true (change)="toggleFilter()">Show only root issues</md-checkbox>
   <blackguard-issue *ngFor="let issue of getIssues()" [issue]="issue" (select)="onSelectIssue($event)" (deselect)="onDeselectIssue($event)">
   </blackguard-issue>
 </section>

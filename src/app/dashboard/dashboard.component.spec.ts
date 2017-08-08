@@ -4,6 +4,9 @@ import { DashboardComponent } from './dashboard.component';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { IssueService } from 'app/issues/service/issue.service';
 import { IssueComponent } from 'app/issues/issue.component';
+import { NotificationService } from 'app/common-services/notification.service';
+import { MaterialModule } from '@angular/material';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('DashboardComponent', () => {
   let component: DashboardComponent;
@@ -15,9 +18,10 @@ describe('DashboardComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [DashboardComponent,IssueComponent],
-      providers: [IssueService],
-      schemas: [NO_ERRORS_SCHEMA]
+      declarations: [DashboardComponent, IssueComponent],
+      schemas: [NO_ERRORS_SCHEMA],
+      imports: [MaterialModule, BrowserAnimationsModule],
+      providers: [IssueService, NotificationService]
     })
       .compileComponents();
   }));

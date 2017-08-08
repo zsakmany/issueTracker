@@ -2,6 +2,10 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.2.0.
 
+## Custom SOCKET.IO server
+
+To test the socket.io features, first build the angular application, then run `npm run server`. It will listen on `http://localhost:3000/`
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.

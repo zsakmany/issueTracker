@@ -23,7 +23,7 @@ export class DashboardComponent implements OnInit {
   public addIssueFromInput(input: HTMLInputElement): void {
     const parentId = this.parentIssue ? this.parentIssue.id : undefined;
     if (input.value !== '') {
-      this.issueService.addIssue(input.value, parentId);
+      this.issueService.handleNewIssue(input.value, parentId);
       this.unmarkParentIssue();
       input.value = '';
     }
